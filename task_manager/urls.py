@@ -16,7 +16,7 @@ from task_manager.views import (
     TagListView,
     TagCreateView,
     TagUpdateView,
-    TagDeleteView,
+    TagDeleteView, WorkerListView,
 )
 
 urlpatterns = [
@@ -65,6 +65,11 @@ urlpatterns = [
         "task-types/<int:pk>/delete/",
         TaskTypeDeleteView.as_view(),
         name="task-type-delete"
+    ),
+    path(
+        "workers/",
+        WorkerListView.as_view(),
+        name="worker-list"
     ),
     path(
         "workers/<int:pk>/detail/",
