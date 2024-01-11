@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from task_manager.models import Task, Tag
+from task_manager.models import Task, Tag, TaskType
 
 
 class TaskForm(forms.ModelForm):
@@ -35,6 +35,26 @@ class TaskForm(forms.ModelForm):
 
 
 class TaskNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Search by name"
+            }
+        )
+    )
+
+
+class TaskTypeForm(forms.ModelForm):
+    class Meta:
+        model = TaskType
+        fields = "__all__"
+
+
+class TaskTypeNameSearchForm(forms.Form):
     name = forms.CharField(
         max_length=255,
         required=False,
