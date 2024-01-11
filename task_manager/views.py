@@ -14,7 +14,12 @@ from task_manager.models import Task, TaskType, Worker, Tag
 
 @login_required
 def index(request):
-    context = {"segment": "index"}
+    num_tasks = Task.objects.count()
+    num_team_members = Task.objects.count()
+    context = {
+        "num_tasks": num_tasks,
+        "num_team_members": num_team_members
+    }
     html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
@@ -135,18 +140,18 @@ class TagListView(LoginRequiredMixin, generic.ListView):
 class TagCreateView(LoginRequiredMixin, generic.CreateView):
     model = Tag
     form_class = TagForm
-    success_url = reverse_lazy("task:tag_list")
+    success_url = reverse_lazy("manager:tag_list")
 
 
 class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     form_class = TagForm
-    success_url = reverse_lazy("task:tag_list")
+    success_url = reverse_lazy("manager:tag_list")
 
 
 class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tag
-    success_url = reverse_lazy("task:tag_list")
+    success_url = reverse_lazy("manager:tag_list")
 
 
 @require_POST
