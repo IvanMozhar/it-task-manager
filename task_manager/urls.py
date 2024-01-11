@@ -102,3 +102,5 @@ urlpatterns = [
         name="tag-delete"
     ),
 ]
+
+app_name = "task_manager"
