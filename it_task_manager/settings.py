@@ -131,3 +131,5 @@ ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 TEMPLATE_DIR = os.path.join(CORE_DIR, "/templates")
+
+LOGIN_REDIRECT_URL = "/"
