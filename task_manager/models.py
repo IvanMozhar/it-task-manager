@@ -72,7 +72,7 @@ class Task(models.Model):
         related_name="tasks"
     )
     assignees = models.ManyToManyField(Worker, related_name="tasks")
-    tags = models.ManyToManyField(Tag, related_name="tags")
+    tags = models.ManyToManyField(Tag, related_name="tasks")
 
     class Meta:
         ordering = ["name"]
