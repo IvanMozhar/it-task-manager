@@ -10,7 +10,8 @@ class TaskForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
     )
     tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
     )
 
     class Meta:
@@ -86,3 +87,17 @@ class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = "__all__"
+
+
+class TagNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Search by name"
+            }
+        )
+    )
