@@ -66,3 +66,23 @@ class TaskTypeNameSearchForm(forms.Form):
             }
         )
     )
+
+
+class WorkerNameSearchForm(forms.Form):
+    first_name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Search by name"
+            }
+        )
+    )
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = "__all__"
