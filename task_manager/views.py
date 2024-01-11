@@ -1,13 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.decorators.http import require_POST
 
-from task_manager.forms import TaskNameSearchForm, TaskForm, TaskTypeForm, TaskTypeNameSearchForm
-from task_manager.models import Task, TaskType
+from task_manager.forms import TaskNameSearchForm, TaskForm, TaskTypeForm, TaskTypeNameSearchForm, WorkerNameSearchForm, \
+    TagForm
+from task_manager.models import Task, TaskType, Worker, Tag
 
 
 @login_required
@@ -93,3 +95,63 @@ class TaskTypeCreateView(LoginRequiredMixin, generic.CreateView):
 class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = TaskType
     success_url = reverse_lazy("manager:task-type-list")
+
+
+class WorkerListView(LoginRequiredMixin, generic.ListView):
+    model = Worker
+    context_object_name = "worker_list"
+    template_name = "manager/worker_list.html"
+    queryset = Worker.objects.all().select_related("position")
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListView, self).get_context_data(**kwargs)
+        first_name = self.request.GET.get("first_name", "")
+        context["search_form"] = WorkerNameSearchForm(
+            initial={"first_name": first_name}
+        )
+        return context
+
+    def get_queryset(self):
+        form = WorkerNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return self.queryset.filter(
+                first_name__icontains=form.cleaned_data["first_name"],
+            )
+        return self.queryset
+
+
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Worker
+    queryset = Worker.objects.all().prefetch_related("tasks__task_type")
+
+
+class TagListView(LoginRequiredMixin, generic.ListView):
+    model = Tag
+    context_object_name = "tag_list"
+    template_name = "manager/tag_list.html"
+
+
+class TagCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy("task:tag_list")
+
+
+class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Tag
+    form_class = TagForm
+    success_url = reverse_lazy("task:tag_list")
+
+
+class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Tag
+    success_url = reverse_lazy("task:tag_list")
+
+
+@require_POST
+def toggle_task_completed(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.is_completed = not task.is_completed
+    task.save()
+    return redirect("manager:task-list")
