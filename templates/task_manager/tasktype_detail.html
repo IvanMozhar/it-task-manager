@@ -1,0 +1,33 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="mb-4">
+    <h1>Task type: {{ tasktype }}</h1>
+  </div>
+
+  {% if tasktype.tasks.all %}
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Task name</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for task in tasktype.tasks.all %}
+        <tr class='clickable-row' data-href="{% url 'task_manager:task-detail' pk=task.id %}">
+          <td>
+            {{ task.name }}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>There are no tasks with this task type.</p>
+  {% endif %}
+  <div>
+    <a href="{% url 'task_manager:task-type-delete' pk=tasktype.id %}" class="btn btn-danger">
+      Delete this task type
+    </a>
+  </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="mb-4">
+      <h2>
+        {{ worker.first_name }} {{ worker.last_name }} ({{ worker.username }})
+      </h2>
+      <h4>{{ worker.position }}</h4>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            Tasks in Progress
+          </div>
+          <ul class="list-group list-group-flush">
+            {% if worker.tasks.all %}
+              {% for task in worker.tasks.all %}
+                {% if not task.is_completed %}
+                  <li class="list-group-item">
+                    <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="text-decoration-none">
+                      {{ task.name }}
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="list-group-item">No tasks in progress</li>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <li class="list-group-item">No tasks in progress</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Completed Tasks
+          </div>
+          <ul class="list-group list-group-flush">
+            {% if worker.tasks.all %}
+              {% for task in worker.tasks.all %}
+                {% if task.is_completed %}
+                  <li class="list-group-item">
+                    <a href="{% url 'task_manager:task-detail' pk=task.id %}" class="text-decoration-none">
+                      {{ task.name }}
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="list-group-item">No completed tasks</li>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <li class="list-group-item">No completed tasks</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
