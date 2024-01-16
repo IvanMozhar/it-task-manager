@@ -63,7 +63,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "task_manager.context_processors.cfg_assets_root"
             ],
         },
     },
@@ -125,11 +124,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "task_manager.Worker"
-
-ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
-
-CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-TEMPLATE_DIR = os.path.join(CORE_DIR, "/templates")
 
 LOGIN_REDIRECT_URL = "/"
