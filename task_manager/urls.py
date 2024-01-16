@@ -16,7 +16,8 @@ from task_manager.views import (
     TagListView,
     TagCreateView,
     TagUpdateView,
-    TagDeleteView, WorkerListView,
+    TagDeleteView,
+    WorkerListView,
 )
 
 urlpatterns = [
