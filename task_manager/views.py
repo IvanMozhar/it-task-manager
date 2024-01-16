@@ -182,6 +182,7 @@ class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("task_manager:tag-list")
 
 
+@login_required
 @require_POST
 def toggle_task_completed(request, pk):
     task = get_object_or_404(Task, pk=pk)
