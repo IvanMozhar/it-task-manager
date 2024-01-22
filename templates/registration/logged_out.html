@@ -1,0 +1,21 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+
+{% block content %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card border-0 shadow">
+          <div class="card-body text-center">
+            <h1 class="h3 mb-3">You have been logged out</h1>
+            <p class="lead text-muted">You have successfully logged out of your account.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Click here to login again</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h2 class="h3 mb-0">{{ task.name }}</h2>
+      </div>
+      <div class="card-body">
+        <h5 class="mb-4">
+          Task type: <span class="badge bg-secondary">{{ task.task_type }}</span>
+        </h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6 class="form-label">Assigned to</h6>
+            {% if task.assignees.all %}
+              <ul class="list-group">
+                {% for worker in task.assignees.all %}
+                  <li class="list-group-item">
+                    <a href="{% url 'task_manager:worker-detail' pk=worker.id %}">
+                      {{ worker.get_full_name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No assignees</p>
+            {% endif %}
+          </div>
+          <div class="col-md-6 mb-3">
+            <h6 class="form-label">Priority: {{ task.priority }}</h6>
+          </div>
+          <div class="col-md-6 mb-3">
+            <h6 class="form-label">Tags: </h6>
+            {% if task.tags.all %}
+              <ul class="list-group">
+                {% for tag in task.tags.all %}
+                  <li class="list-group-item">
+                    {{ tag.name }}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No tags</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="mb-3">
+          <h6 class="form-label">Description</h6>
+          <p>{{ task.description }}</p>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6 class="form-label">Due Date</h6>
+            <p>{{ task.deadline|date:"d-m-Y" }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="btn btn-danger">
+          Delete
+        </a>
+        <a href="{% url 'task_manager:task-update' pk=task.id %}" class="btn btn-primary">
+          Update
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
