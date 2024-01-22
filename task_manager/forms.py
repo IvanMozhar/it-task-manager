@@ -23,6 +23,7 @@ class TaskForm(forms.ModelForm):
             "priority",
             "task_type",
             "assignees",
+            "tags"
         ]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
