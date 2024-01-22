@@ -1,6 +1,10 @@
 # it-task-manager
 Task Manager is a robust and intuitive web application designed to help teams and individuals stay organized and enhance productivity. It allows users to create, assign, track, and manage tasks efficiently. This tool is perfect for project managers, teams, and anyone looking to streamline their workflow and keep track of their projects and tasks in one central location.
 
+## Check it out
+
+[IT task manager deployed to render] (https://it-task-manager-vzwv.onrender.com/tasks/)
+
 __Mannual build__
 
 Download the code
