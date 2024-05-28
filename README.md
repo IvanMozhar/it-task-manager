@@ -5,6 +5,12 @@ Task Manager is a robust and intuitive web application designed to help teams an
 
 [IT task manager deployed to render] (https://it-task-manager-vzwv.onrender.com/tasks/)
 
+__Sign in with test user__
+
+username: user
+
+password: user12345
+
 __Mannual build__
 
 Download the code
